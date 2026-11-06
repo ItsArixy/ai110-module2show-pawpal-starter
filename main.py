@@ -1,5 +1,5 @@
 
-from pawpal_system import Owner, Pet, CareTask, ScheduleEntry, DeferredTask
+from pawpal_system import Owner, Pet, CareTask, ScheduleEntry, DeferredTask, PawPalPlanner
 from datetime import time
 
 
@@ -11,8 +11,7 @@ myTask = CareTask("Morning walk", 20, "high", "Buddy")
 firstEntry = ScheduleEntry(myTask, time(9, 0), time(9, 20), "Scheduled task")
 secondTask = CareTask("Feed", 10, "medium", "Grumpy")
 thirdTask = CareTask("Vet visit", 60, "high", "Buddy")
+pawPalPlanner = PawPalPlanner(myOwner)
 
 print(f"Today's schedule for {myOwner.name}: \n")
-print(firstEntry)
-print(secondTask)
-print(thirdTask)
+print("Scheduled tasks:")
