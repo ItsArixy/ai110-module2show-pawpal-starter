@@ -28,7 +28,7 @@
 
 | | Option A | Option B |
 |-|----------|----------|
-| **Model / tool used** | | |
+| **Model / tool used** Visual Studio Agent| | |
 | **Prompt** | | |
 | **Response summary** | | |
 | **What was useful** | | |

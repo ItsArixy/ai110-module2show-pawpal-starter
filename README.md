@@ -12,6 +12,21 @@ A busy pet owner needs help staying consistent with pet care. They want an assis
 
 Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
 
+## Backend design
+
+`pawpal_system.py` contains the in-memory domain model:
+
+- `Owner` stores the owner's name, preferred start time, and available minutes.
+- `Pet` stores a pet's name and species.
+- `CareTask` records the duration, priority, and assigned pet for a care task.
+- `PawPalPlanner` validates pet assignments, supports task edits/removal, and builds a daily schedule.
+- `DailySchedule` reports scheduled entries and tasks deferred for lack of time.
+
+The scheduler orders tasks by priority (high to low), preserves input order for
+equal priorities, and schedules each whole task only when it fits the remaining
+daily time. The app keeps this data in Streamlit session state; it is not saved
+between sessions.
+
 ## What you will build
 
 Your final app should:
@@ -70,16 +85,14 @@ Sample test output:
 # Paste your pytest output here
 ```
 
-## 📐 Smarter Scheduling
-
-> Fill in once you've implemented scheduling logic.
+## 📐 Scheduling behavior
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | `PawPalPlanner.build_schedule()` | High priority first; insertion order breaks ties |
+| Filtering | `PawPalPlanner.build_schedule()` | Defers a whole task when it exceeds remaining availability |
+| Conflict handling | `PawPalPlanner.build_schedule()` | Places tasks sequentially, so planned tasks do not overlap |
+| Recurring tasks | Not implemented | Add each day's tasks manually |
 
 ## 📸 Demo Walkthrough
 

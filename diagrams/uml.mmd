@@ -1,15 +1,60 @@
 classDiagram
-    %% Replace the placeholders below with your actual classes, attributes, methods, and relationships.
-    %% Keep this file updated so it matches your final implementation.
-
-    class ClassName {
-        +type attribute
-        +method() returnType
+    class Owner {
+        +str name
+        +time availability_start
+        +int availability_minutes
     }
 
-    class AnotherClass {
-        +type attribute
-        +method() returnType
+    class Pet {
+        +str name
+        +str species
     }
 
-    ClassName --> AnotherClass : relationship
+    class CareTask {
+        +str title
+        +int duration_minutes
+        +str priority
+        +str pet_name
+    }
+
+    class ScheduleEntry {
+        +CareTask task
+        +datetime starts_at
+        +datetime ends_at
+        +str reason
+    }
+
+    class DeferredTask {
+        +CareTask task
+        +str reason
+    }
+
+    class DailySchedule {
+        +Owner owner
+        +list entries
+        +list deferred_tasks
+        +planned_minutes()
+        +remaining_minutes()
+    }
+
+    class PawPalPlanner {
+        +Owner owner
+        +dict pets
+        +list tasks
+        +add_pet(Pet)
+        +add_task(CareTask)
+        +update_task(int, CareTask)
+        +remove_task(int)
+        +build_schedule() DailySchedule
+    }
+
+    Owner "1" --> "0..*" Pet : owns
+    Pet "1" <-- "0..*" CareTask : assigned to
+    PawPalPlanner --> Owner : manages
+    PawPalPlanner --> Pet : registers
+    PawPalPlanner --> CareTask : schedules
+    DailySchedule --> Owner : plans for
+    DailySchedule --> ScheduleEntry : contains
+    DailySchedule --> DeferredTask : reports
+    ScheduleEntry --> CareTask : schedules
+    DeferredTask --> CareTask : defers
